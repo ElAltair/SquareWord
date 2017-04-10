@@ -5,9 +5,11 @@ import com.squareword.dictionary.Dictionary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+
 public class SquareWord {
-    private ArrayList<ArrayList<Cell>> field;
+    private List<List<Cell>> field;
     private int size;
     private Dictionary dictionary;
 
@@ -47,7 +49,6 @@ public class SquareWord {
             System.out.println();
         });
     }
-
 
     public int getSize(){
         return size;

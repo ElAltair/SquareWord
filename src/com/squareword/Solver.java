@@ -4,9 +4,12 @@ import com.squareword.cell.Cell;
 import com.squareword.cell.CellController;
 import com.squareword.dictionary.Dictionary;
 import com.squareword.dictionary.DictionaryController;
+import com.squareword.row.Row;
+import com.squareword.row.RowGenerator;
 
 public class Solver {
     private SquareWord word;
+    private SquareWordRow wordRow;
     private CellController controller;
     private Dictionary dictionary;
 
@@ -14,6 +17,11 @@ public class Solver {
         this.word = word;
         this.dictionary = dictionary;
         controller = new CellController(word);
+    }
+
+    public Solver(SquareWordRow word, Dictionary dictionary){
+        this.wordRow = word;
+        this.dictionary = dictionary;
     }
 
     private boolean findSolution(DictionaryController dictController, Cell cell){
@@ -68,7 +76,6 @@ public class Solver {
 
     }
 
-
     public void solve(){
         while(controller.hasNextCell())
         {
@@ -95,5 +102,36 @@ public class Solver {
                 controller.nextCell();
             word.print();
         }
+    }
+
+    public void fillField(){
+        int size = wordRow.getSize();
+        for(int i = 0; i < size; ++i) {
+            RowGenerator rowGenerator = new RowGenerator(this.dictionary);
+            String row = rowGenerator.generate(wordRow.getRow(i));
+            this.wordRow.setRow(i, new Row(i, row, wordRow.getRow(i).isDefault()));
+        }
+
+    }
+
+    public void resolve() {
+        int size = wordRow.getSize();
+        for (int i = 0; i < size; ++i) {
+            RowGenerator rowGenerator = new RowGenerator(this.dictionary);
+            String row = rowGenerator.generate(wordRow.getRow(i));
+            this.wordRow.setRow(i, new Row(row, wordRow.getRow(i).isDefault()));
+            wordRow.calculateConflict(wordRow.getRow(i));
+        }
+    }
+
+    public void GreedySolve(){
+        fillField();
+        wordRow.print();
+        wordRow.calculateConflicts();
+        if(wordRow.getConfilictCount() != 0){
+            resolve();
+            System.out.println("Not solved");
+        }
+
     }
 }

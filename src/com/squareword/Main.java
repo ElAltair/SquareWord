@@ -1,12 +1,22 @@
 package com.squareword;
 
 import com.squareword.dictionary.Dictionary;
+import com.squareword.dictionary.DictionaryController;
+import com.squareword.row.RowGenerator;
 
 public class Main {
     public static void main(String[] args) {
+
         Dictionary dictionary = new Dictionary();
         dictionary.add("С,Л,Е,З,А");
 
+        SquareWordRow word = new SquareWordRow(dictionary);
+        word.parseField("СЛЕЗА\n.....\n..ЛЕС\n.....\n.....");
+        Reshuffler reshuffler = new Reshuffler(new DictionaryController(dictionary));
+        word.print();
+        Solver solver = new Solver(word, dictionary);
+        solver.GreedySolve();
+        /*
         SquareWord word = new SquareWord(dictionary);
         word.parseField("СЛЕЗА\n.....\n..ЛЕС\n.....\n.....");
         word.print();
@@ -23,5 +33,6 @@ public class Main {
 
         Solver sudokuSolver = new Solver(sudokuWord, sudoku);
         sudokuSolver.solve();
+        */
     }
 }

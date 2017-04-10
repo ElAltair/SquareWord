@@ -1,7 +1,7 @@
 package com.squareword.cell;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Cell {
     private int i;
@@ -9,7 +9,7 @@ public class Cell {
     private String word;
     private boolean isInstalled;
     private boolean isDefault;
-    ArrayList<String> previousValues;
+    List<String> previousValues;
 
     public Cell(int i, int j, String word, boolean isDefault){
        this.i = i;
@@ -45,7 +45,7 @@ public class Cell {
         return isDefault;
     }
 
-    public ArrayList<String> getPreviousValues(){
+    public List<String> getPreviousValues(){
         return previousValues;
     }
 
